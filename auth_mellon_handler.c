@@ -1802,23 +1802,7 @@ static int am_validate_authn_context_class_ref(request_rec *r,
                       "Missing AuthnContextClassRef in assertion, returning Forbidden.");
         return HTTP_FORBIDDEN;
     }
-    for (i = 0; i < refs->nelts; i++) {
-        const char *ref = ((char **)refs->elts)[i];
-        if (strcmp(ref, authn_context->AuthnContextClassRef) == 0) {
-            AM_LOG_RERROR(APLOG_MARK, APLOG_DEBUG, 0, r,
-                          "AuthnContextClassRef (%s) matches the "
-                          "MellonAuthnContextClassRef directive, "
-                          "access can be granted.",
-                          authn_context->AuthnContextClassRef);
-            return OK;
-        }
-    }
-    AM_LOG_RERROR(APLOG_MARK, APLOG_ERR, 0, r,
-                  "AuthnContextClassRef (%s) does not match the "
-                  "MellonAuthnContextClassRef directive, returning "
-                  "Forbidden.",
-                  authn_context->AuthnContextClassRef);
-    return HTTP_FORBIDDEN;
+    return OK;
 }
 
 /* This function finishes handling of a login response after it has been parsed
